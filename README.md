@@ -2,6 +2,11 @@
 
 將sklearn的estimator儲存成json格式。
 
+目前能處理:
+sklearn
+pipeline (含steps)
+DataFrameMapper
+
 **範例: single, not nested estimator**
 ```python
 import sklearn2json as s2j
