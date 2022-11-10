@@ -115,7 +115,7 @@ setup(
     #
     py_modules=["base", "sklearn2json"],
     #
-    packages=find_packages(),  # Required
+    packages=["ml_tools"],  # Required
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
     # and refuse to install the project if the version does not match. See
