@@ -8,5 +8,5 @@ __all__ = [
 ]
 
 from .base import chain
-from skelarn2json import save_estimator
-from skelarn2json import open_estimator
+from .sklearn2json import save_estimator
+from .sklearn2json import open_estimator
