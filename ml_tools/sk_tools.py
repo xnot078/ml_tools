@@ -5,8 +5,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.impute import SimpleImputer
 
+
 from typing import Literal
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.offline as pyo
@@ -88,8 +90,6 @@ def cluster_plot(X_2d, labels, ax = None, use_plotly = False):
 # %%
 if __name__ == '__main__':
 	from sklearn.datasets import make_circles, make_blobs
-	import pandas as pd
-	import matplotlib.pyplot as plt
 
 	X0 = make_blobs(centers = [[0,0]], n_features=2, n_samples = 1000, cluster_std=.25)[0]
 	X1 = make_circles()[0]
