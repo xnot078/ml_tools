@@ -1,5 +1,6 @@
 # %%
 from sklearn.base import BaseEstimator, TransformerMixin
+from typing import Literal
 import numpy as np
 from sklearn.decomposition import FastICA, PCA
 import matplotlib.pyplot as plt
