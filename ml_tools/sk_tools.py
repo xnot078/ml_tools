@@ -106,3 +106,71 @@ if __name__ == '__main__':
 
 	cluster_plot(X_2d, label_ae)
 
+
+
+def cluster_plot_featDist(X, labels):
+	"""
+	plot kde of each feature in one subplot. the left-top is 2D scatter plot of X which is hue by labels.
+	"""
+	num_subplots = len(X.columns) + 1
+	num_rows = int(np.ceil(num_subplots/3))
+	# 投影成2維之後的2d散佈
+	fig, axs = plt.subplots(num_rows, 3, figsize = (4 * 3, 4 * num_rows))
+	X_2d = sk_tools.to_2d(X)
+	sk_tools.cluster_plot(X_2d, labels, ax = axs[0, 0])
+	axs[0, 0].grid()
+	# 各群組的各個特徵分布
+	X_des = X.copy()
+	X_des['label'] = labels
+	for i, feat in enumerate(X.columns, start = 1):
+		r, c = i//3, i % 3
+		sns.kdeplot(data = X_des[[feat, 'label']], 
+					x = feat, 
+					hue = 'label', 
+					fill = True, 
+					linewidth = 2, 
+					alpha = .2,
+					palette = 'coolwarm', 
+					ax = axs[r, c], 
+					warn_singular = False)
+		axs[r, c].grid()
+	return fig
+
+
+
+# %%
+def cluster_feat_radar(X, labels, aggfunc = 'mean', title = ''):
+	"""
+	plot radar of each feature which is aggregated by aggfunc. 
+	"""
+	# 缺失值先補0 (不然平均時nan會跳過)
+	X_des = X.copy().fillna(0)
+	X_des['label'] = labels
+	# 為clusters計算agg
+	cluster_agg = X_des.groupby('label').agg(aggfunc)
+	cluster_agg_std = (cluster_agg - cluster_agg.min()) / (cluster_agg.max() - cluster_agg.min())
+	holder = []
+	showlegend = True
+	for c in cluster_agg.T:
+		vals = cluster_agg.loc[c]
+		angle = cluster_agg_std.loc[c]
+		holder.append(
+				go.Scatterpolar(
+					r = angle,
+					theta = vals.index,
+					name = f'cluster {c}',
+					text = vals,
+					line = {"dash": "solid", "width": 2},
+	                # marker = {'size': 16, 'color': Cmap_Marker.get(landing)},
+	                fill = "toself",
+	                opacity = .9,
+	                showlegend = True,
+	                hovertemplate = "%{theta}: %{text}"
+					)
+			)
+		# showlegend = False
+	fig = go.Figure(holder)
+	fig.update_layout(title = {'text': title, 'x': .5, 'font': {'size': 16}})
+
+	pyo.plot(fig, filename = os.path.join(PROJECT_PATH, 'img/research/cluster_radar.html'), auto_open=False)
+
