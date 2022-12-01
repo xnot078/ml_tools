@@ -93,28 +93,6 @@ def cluster_plot(X_2d, labels, ax=None, use_plotly=False):
         fig = go.Figure(fig_data)
         pyo.plot(fig, auto_open=False)
 
-
-# %%
-if __name__ == '__main__':
-    from sklearn.datasets import make_circles, make_blobs
-
-    X0 = make_blobs(centers=[[0, 0]], n_features=2,
-                    n_samples=1000, cluster_std=.25)[0]
-    X1 = make_circles()[0]
-    X = np.vstack([X0, X1])
-
-    X_2d = to_2d(X)
-
-    df = pd.DataFrame(X)
-    ae = AnomalyExtractor(method='ICA', drop_ratio=.15,
-                          n_components=2, return_label_only=True)
-    label_ae = ae.transform(df)
-    df['label_ae'] = label_ae
-    print(sum(label_ae))
-    print(df.groupby(label_ae).mean())
-
-    cluster_plot(X_2d, label_ae)
-
 def cluster_plot_featDist(X, labels):
     """
     plot kde of each feature in one subplot. the left-top is 2D scatter plot of X which is hue by labels.
@@ -187,3 +165,25 @@ def cluster_feat_radar(X, labels, file_name=None, aggfunc='mean', title=''):
     if file_name is not None:
         pyo.plot(fig, filename=file_name, auto_open=False)
     pyo.plot(fig, filename='temp_radar.html', auto_open=False)
+
+
+# %%
+if __name__ == '__main__':
+    from sklearn.datasets import make_circles, make_blobs
+
+    X0 = make_blobs(centers=[[0, 0]], n_features=2,
+                    n_samples=1000, cluster_std=.25)[0]
+    X1 = make_circles()[0]
+    X = np.vstack([X0, X1])
+
+    X_2d = to_2d(X)
+
+    df = pd.DataFrame(X)
+    ae = AnomalyExtractor(method='ICA', drop_ratio=.15,
+                          n_components=2, return_label_only=True)
+    label_ae = ae.transform(df)
+    df['label_ae'] = label_ae
+    print(sum(label_ae))
+    print(df.groupby(label_ae).mean())
+
+    cluster_plot(X_2d, label_ae)
