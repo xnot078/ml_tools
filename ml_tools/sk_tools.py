@@ -139,7 +139,7 @@ def cluster_plot_featDist(X, labels):
 
 
 # %%
-def cluster_feat_radar(X, labels, aggfunc = 'mean', title = ''):
+def cluster_feat_radar(X, labels, file_name = None, aggfunc = 'mean', title = ''):
 	"""
 	plot radar of each feature which is aggregated by aggfunc. 
 	"""
@@ -172,5 +172,8 @@ def cluster_feat_radar(X, labels, aggfunc = 'mean', title = ''):
 	fig = go.Figure(holder)
 	fig.update_layout(title = {'text': title, 'x': .5, 'font': {'size': 16}})
 
-	pyo.plot(fig, filename = os.path.join(PROJECT_PATH, 'img/research/cluster_radar.html'), auto_open=False)
+	if file_name is not None:
+		pyo.plot(fig, filename = file_name, auto_open=False)
+	pyo.plot(fig, filename = 'temp_radar.html', auto_open=False)
+	
 
