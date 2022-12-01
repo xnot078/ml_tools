@@ -116,8 +116,8 @@ def cluster_plot_featDist(X, labels):
 	num_rows = int(np.ceil(num_subplots/3))
 	# 投影成2維之後的2d散佈
 	fig, axs = plt.subplots(num_rows, 3, figsize = (4 * 3, 4 * num_rows))
-	X_2d = sk_tools.to_2d(X)
-	sk_tools.cluster_plot(X_2d, labels, ax = axs[0, 0])
+	X_2d = to_2d(X)
+	cluster_plot(X_2d, labels, ax = axs[0, 0])
 	axs[0, 0].grid()
 	# 各群組的各個特徵分布
 	X_des = X.copy()
