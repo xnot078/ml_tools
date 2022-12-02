@@ -51,6 +51,7 @@ class AnomalyExtractor(BaseEstimator, TransformerMixin):
         X_inverse = estimator.inverse_transform(X_de)
         SSE = np.sum((X - X_inverse)**2, axis=1)
         SSE_scaled = (SSE - min(SSE)) / (max(SSE) - min(SSE))
+        self.scores = SSE_scaled
 
         # 如果thresh有提供，>= thresh的視為離群; 反之，SSE_scaled 前drop_ratio%的視為離群值
         if isinstance(self.thresh, float) and self.thresh <= 1 and self.thresh > 0:
