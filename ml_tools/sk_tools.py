@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.graph_objects as go
 import plotly.offline as pyo
-
+import os
 
 class AnomalyExtractor(BaseEstimator, TransformerMixin):
     """
