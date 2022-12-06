@@ -168,6 +168,7 @@ def cluster_feat_radar(X, labels, file_name=None, aggfunc='mean', title=''):
     if file_name is not None:
         pyo.plot(fig, filename=file_name, auto_open=False)
     pyo.plot(fig, filename='temp_radar.html', auto_open=False)
+	fig.write_image("test.png")
 
 
 # %%
