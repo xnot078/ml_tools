@@ -113,6 +113,7 @@ def cluster_plot_featDist(X, labels):
     # 各群組的各個特徵分布
     X_des = X.copy()
     X_des['label'] = labels
+    X_des = X_des.fillna(0)
     for i, feat in enumerate(X.columns, start=2):
         r, c = i // 3, i % 3
         sns.kdeplot(data=X_des[[feat, 'label']],
