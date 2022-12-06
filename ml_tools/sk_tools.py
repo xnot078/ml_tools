@@ -140,6 +140,8 @@ def cluster_feat_radar(X, labels, file_name=None, aggfunc='mean', title=''):
     cluster_agg = X_des.groupby('label').agg(aggfunc)
     cluster_agg_std = (cluster_agg - cluster_agg.min()) / \
         (cluster_agg.max() - cluster_agg.min())
+    cluster_agg_std = cluster_agg_std.fillna(0)
+
     holder = []
     showlegend = True
     for c in cluster_agg.T:
